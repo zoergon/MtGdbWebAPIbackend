@@ -39,13 +39,13 @@ namespace MtGdbWebAPIbackend.Controllers
         // Hakee kortin nimen perusteella kaikki hakutulokset
         [HttpGet]
         [Route("name/{key}")]
-        public List<AllCard> GetSomeCards(string key) // Hakee jollain tiedolla mätsäävät rivit
+        public List<AllCard> GetCards(string key) // Hakee jollain tiedolla mätsäävät rivit
         {
-            var someCards = from n in db.AllCards
+            var cards = from n in db.AllCards
                                 where n.Name == key
                                 select n;
 
-            return someCards.ToList();
+            return cards.ToList();
         }
 
         // Hakee artistin nimen perusteella kaikki hakutulokset
@@ -53,11 +53,11 @@ namespace MtGdbWebAPIbackend.Controllers
         [Route("artist/{key}")]
         public List<AllCard> GetArtist(string key)
         {
-            var someArtists = from a in db.AllCards
+            var artists = from a in db.AllCards
                             where a.Artist == key
                             select a;
 
-            return someArtists.ToList();
+            return artists.ToList();
         }
 
         // Hakee kortin reunojen värin perusteella kaikki hakutulokset
@@ -65,11 +65,11 @@ namespace MtGdbWebAPIbackend.Controllers
         [Route("border_color/{key}")]
         public List<AllCard> GetSomeBorderColors(string key)
         {
-            var someBorderColors = from b in db.AllCards
+            var borderColors = from b in db.AllCards
                               where b.BorderColor == key
                               select b;
 
-            return someBorderColors.ToList();
+            return borderColors.ToList();
         }
 
         // Hakee Cardmarketin id:n perusteella hakutuloksen

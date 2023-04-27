@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MtGdbWebAPIbackend.Models;
 
-namespace MtGdbWebAPI_backend.Controllers
+namespace MtGdbWebAPIbackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

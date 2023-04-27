@@ -187,7 +187,7 @@ public partial class AllCard
 
     public virtual ICollection<Maybeboard> Maybeboards { get; set; } = new List<Maybeboard>();
 
-    public virtual ICollection<OwnedCard> OwnedCards { get; set; } = new List<OwnedCard>();
+    public virtual OwnedCard? OwnedCard { get; set; }
 
     public virtual ICollection<Sideboard> Sideboards { get; set; } = new List<Sideboard>();
 

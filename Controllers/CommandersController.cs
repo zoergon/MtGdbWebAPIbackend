@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MtGdbWebAPIbackend.Controllers;
 using MtGdbWebAPIbackend.Models;
 
-namespace MtGdbWebAPI_backend.Controllers
+namespace MtGdbWebAPIbackend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -48,77 +48,78 @@ namespace MtGdbWebAPI_backend.Controllers
             return commanders.ToList();
         }
 
-        //// Luo uuden deckin
-        //[HttpPost]
-        //[Route("")]
-        //public ActionResult PostCreateNewDeck([FromBody] Deck deck)
-        //{
-        //    try
-        //    {
-        //        db.Decks.Add(deck);
-        //        db.SaveChanges();
+        // Lisää uuden commanderin
+        [HttpPost]
+        [Route("")]
+        public ActionResult PostCreateNewCommander([FromBody] Commander commander)
+        {
+            try
+            {
+                db.Commanders.Add(commander);
+                db.SaveChanges();
 
-        //        return Ok(deck.DeckId); // Palauttaa vasta luodun uuden deckin deck_id:n
-        //    }
-        //    catch (Exception e)
-        //    {
+                return Ok(commander.Id); // Palauttaa luodun commanderin id:n
+            }
+            catch (Exception e)
+            {
 
-        //        return BadRequest("Something went wrong: " + e);
-        //    }
-        //    finally
-        //    {
-        //        db.Dispose();
-        //    }
-        //}
+                return BadRequest("Something went wrong: " + e);
+            }
+            finally
+            {
+                db.Dispose();
+            }
+        }
 
-        //// Päivittää olemassa olevan deckin
-        //[HttpPut]
-        //[Route("{id}")]
-        //public ActionResult PutEdit(int id, [FromBody] Deck deck)
-        //{
-        //    try
-        //    {
-        //        Deck dek = db.Decks.Find(id);
-        //        if (dek != null)
-        //        {
-        //            dek.Name = deck.Name;
-        //            dek.Format = deck.Format;
+        // Päivittää olemassa olevan commanderin
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult PutEdit(int id, [FromBody] Commander commander)
+        {
+            try
+            {
+                Commander com = db.Commanders.Find(id);
+                if (com != null)
+                {
+                    com.DeckId = commander.DeckId;
+                    com.Id = commander.Id;
+                    com.Count = commander.Count;
 
-        //            db.SaveChanges();
-        //            return Ok(dek.DeckId); // Palauttaa deck_id:n, jos kaikki meni onnistuneesti
-        //        }
-        //        else
-        //        {
-        //            return NotFound("Deck not found!");
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
+                    db.SaveChanges();
+                    return Ok(com.Id); // Palauttaa id:n, jos kaikki meni onnistuneesti
+                }
+                else
+                {
+                    return NotFound("Commander not found!");
+                }
+            }
+            catch (Exception e)
+            {
 
-        //        return BadRequest("Something went wrong: " + e);
-        //    }
-        //    finally
-        //    {
-        //        db.Dispose();
-        //    }
-        //}
+                return BadRequest("Something went wrong: " + e);
+            }
+            finally
+            {
+                db.Dispose();
+            }
+        }
 
-        //// Poistaa deckin
-        //[HttpDelete]
-        //[Route("{id}")]
-        //public ActionResult DeleteDeck(int id)
-        //{
-        //    Deck deck = db.Decks.Find(id);
-        //    if (deck != null)
-        //    {
-        //        db.Decks.Remove(deck);
-        //        db.SaveChanges();
-        //        return Ok("A deck deleted with deck_id: " + id + ".");
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Deck not found with deck_id: " + id + ".");
-        //    }
-        //}
+        // Poistaa commanderin
+        [HttpDelete]
+        [Route("{id}")]
+        public ActionResult DeleteCommander(int id)
+        {
+            Commander commander = db.Commanders.Find(id);
+            if (commander != null)
+            {
+                db.Commanders.Remove(commander);
+                db.SaveChanges();
+                return Ok("A commander deleted with id: " + id + ".");
+            }
+            else
+            {
+                return NotFound("Commander not found with id: " + id + ".");
+            }
+        }
     }
 }

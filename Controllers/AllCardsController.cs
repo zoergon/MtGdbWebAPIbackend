@@ -24,7 +24,9 @@ namespace MtGdbWebAPIbackend.Controllers
         public List<AllCard> GetAllCards()
         {
             List<AllCard> cards = db.AllCards.ToList();
+
             return cards;
+
         }
 
         // Hakee id:n mukaisen yhden kortin
@@ -33,6 +35,7 @@ namespace MtGdbWebAPIbackend.Controllers
         public AllCard GetOneCard(string id)
         {
             AllCard card = db.AllCards.Find(id); // Find-metodi hakee AINA VAIN YHDEN RIVIN PÄÄAVAIMELLA
+
             return card;
         }
 

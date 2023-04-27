@@ -221,14 +221,16 @@ public partial class MtGdbContext : DbContext
 
         modelBuilder.Entity<Commander>(entity =>
         {
-            entity.HasKey(e => e.IndexId);
+            entity.HasKey(e => new { e.DeckId, e.Id }).HasName("PK_Commanders_1");
 
-            entity.Property(e => e.IndexId).HasColumnName("index_id");
-            entity.Property(e => e.Count).HasColumnName("count");
             entity.Property(e => e.DeckId).HasColumnName("deck_id");
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
+            entity.Property(e => e.Count).HasColumnName("count");
+            entity.Property(e => e.IndexId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("index_id");
             entity.Property(e => e.LoginId).HasColumnName("login_id");
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Commanders)
@@ -249,14 +251,16 @@ public partial class MtGdbContext : DbContext
 
         modelBuilder.Entity<Companion>(entity =>
         {
-            entity.HasKey(e => e.IndexId);
+            entity.HasKey(e => new { e.DeckId, e.Id }).HasName("PK_Companions_1");
 
-            entity.Property(e => e.IndexId).HasColumnName("index_id");
-            entity.Property(e => e.Count).HasColumnName("count");
             entity.Property(e => e.DeckId).HasColumnName("deck_id");
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
+            entity.Property(e => e.Count).HasColumnName("count");
+            entity.Property(e => e.IndexId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("index_id");
             entity.Property(e => e.LoginId).HasColumnName("login_id");
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Companions)
@@ -294,9 +298,7 @@ public partial class MtGdbContext : DbContext
 
         modelBuilder.Entity<Login>(entity =>
         {
-            entity.Property(e => e.LoginId)
-                .ValueGeneratedNever()
-                .HasColumnName("login_id");
+            entity.Property(e => e.LoginId).HasColumnName("login_id");
             entity.Property(e => e.Admin).HasColumnName("admin");
             entity.Property(e => e.Password)
                 .HasMaxLength(50)
@@ -308,14 +310,16 @@ public partial class MtGdbContext : DbContext
 
         modelBuilder.Entity<MainDeck>(entity =>
         {
-            entity.HasKey(e => e.IndexId);
+            entity.HasKey(e => new { e.DeckId, e.Id }).HasName("PK_MainDecks_1");
 
-            entity.Property(e => e.IndexId).HasColumnName("index_id");
-            entity.Property(e => e.Count).HasColumnName("count");
             entity.Property(e => e.DeckId).HasColumnName("deck_id");
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
+            entity.Property(e => e.Count).HasColumnName("count");
+            entity.Property(e => e.IndexId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("index_id");
             entity.Property(e => e.LoginId).HasColumnName("login_id");
 
             entity.HasOne(d => d.Deck).WithMany(p => p.MainDecks)
@@ -336,14 +340,16 @@ public partial class MtGdbContext : DbContext
 
         modelBuilder.Entity<Maybeboard>(entity =>
         {
-            entity.HasKey(e => e.IndexId);
+            entity.HasKey(e => new { e.DeckId, e.Id }).HasName("PK_Maybeboards_1");
 
-            entity.Property(e => e.IndexId).HasColumnName("index_id");
-            entity.Property(e => e.Count).HasColumnName("count");
             entity.Property(e => e.DeckId).HasColumnName("deck_id");
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
+            entity.Property(e => e.Count).HasColumnName("count");
+            entity.Property(e => e.IndexId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("index_id");
             entity.Property(e => e.LoginId).HasColumnName("login_id");
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Maybeboards)
@@ -364,17 +370,19 @@ public partial class MtGdbContext : DbContext
 
         modelBuilder.Entity<OwnedCard>(entity =>
         {
-            entity.HasKey(e => e.IndexId);
+            entity.HasKey(e => e.Id).HasName("PK_OwnedCards_1");
 
-            entity.Property(e => e.IndexId).HasColumnName("index_id");
-            entity.Property(e => e.Count).HasColumnName("count");
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
+            entity.Property(e => e.Count).HasColumnName("count");
+            entity.Property(e => e.IndexId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("index_id");
             entity.Property(e => e.LoginId).HasColumnName("login_id");
 
-            entity.HasOne(d => d.IdNavigation).WithMany(p => p.OwnedCards)
-                .HasForeignKey(d => d.Id)
+            entity.HasOne(d => d.IdNavigation).WithOne(p => p.OwnedCard)
+                .HasForeignKey<OwnedCard>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_OwnedCards_AllCards");
 
@@ -386,14 +394,16 @@ public partial class MtGdbContext : DbContext
 
         modelBuilder.Entity<Sideboard>(entity =>
         {
-            entity.HasKey(e => e.IndexId);
+            entity.HasKey(e => new { e.DeckId, e.Id }).HasName("PK_Sideboards_1");
 
-            entity.Property(e => e.IndexId).HasColumnName("index_id");
-            entity.Property(e => e.Count).HasColumnName("count");
             entity.Property(e => e.DeckId).HasColumnName("deck_id");
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
+            entity.Property(e => e.Count).HasColumnName("count");
+            entity.Property(e => e.IndexId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("index_id");
             entity.Property(e => e.LoginId).HasColumnName("login_id");
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Sideboards)
@@ -414,14 +424,16 @@ public partial class MtGdbContext : DbContext
 
         modelBuilder.Entity<Token>(entity =>
         {
-            entity.HasKey(e => e.IndexId);
+            entity.HasKey(e => new { e.DeckId, e.Id }).HasName("PK_Tokens_1");
 
-            entity.Property(e => e.IndexId).HasColumnName("index_id");
-            entity.Property(e => e.Count).HasColumnName("count");
             entity.Property(e => e.DeckId).HasColumnName("deck_id");
             entity.Property(e => e.Id)
                 .HasMaxLength(50)
                 .HasColumnName("id");
+            entity.Property(e => e.Count).HasColumnName("count");
+            entity.Property(e => e.IndexId)
+                .ValueGeneratedOnAdd()
+                .HasColumnName("index_id");
             entity.Property(e => e.LoginId).HasColumnName("login_id");
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Tokens)

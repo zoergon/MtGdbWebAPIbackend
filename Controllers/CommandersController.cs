@@ -22,16 +22,27 @@ namespace MtGdbWebAPIbackend.Controllers
         // Hakee kaikki commanderit
         [HttpGet]
         [Route("")]
-        public List<Commander> GetAllDecks()
+        public IActionResult GetAllDecks()
         {
-            List<Commander> commanders = db.Commanders.ToList();
+            //List<Commander> commanders = db.Commanders.ToList();
 
-            //var commanders = from c in db.Commanders
-            //                 join a in db.AllCards on c.Id equals a.Id
-            //                 join d in db.Decks on c.DeckId equals d.DeckId                             
-            //                 select c;
+            var query = (from c in db.Commanders
+                             join a in db.AllCards on c.Id equals a.Id
+                             join d in db.Decks on c.DeckId equals d.DeckId
+                             select new
+                             {
+                                 c.IndexId,
+                                 d.DeckId,
+                                 DeckName = d.Name,
+                                 a.Id,
+                                 a.Name,
+                                 c.Count,
+                                 c.LoginId
+                             });
 
-            return commanders.ToList();
+            var commanders = query.ToList();
+
+            return Ok(commanders);
         }
 
         // Hakee commanderin nimen perusteella
@@ -84,6 +95,7 @@ namespace MtGdbWebAPIbackend.Controllers
                     com.DeckId = commander.DeckId;
                     com.Id = commander.Id;
                     com.Count = commander.Count;
+                    com.LoginId = commander.LoginId;
 
                     db.SaveChanges();
                     return Ok(com.Id); // Palauttaa id:n, jos kaikki meni onnistuneesti

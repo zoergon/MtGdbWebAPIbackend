@@ -17,8 +17,6 @@ public partial class Deck
 
     public virtual ICollection<Companion> Companions { get; set; } = new List<Companion>();
 
-    public virtual Login Login { get; set; } = null!;
-
     public virtual ICollection<MainDeck> MainDecks { get; set; } = new List<MainDeck>();
 
     public virtual ICollection<Maybeboard> Maybeboards { get; set; } = new List<Maybeboard>();

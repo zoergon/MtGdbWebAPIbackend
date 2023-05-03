@@ -23,6 +23,11 @@ builder.Services.AddDbContext<MtGdbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("paikallinen")
     ));
 
+// Non-nullable kentät, jotka aiheuttavat ongelmia POST/PUT-metodeissa, joilla ei pitäisi olla käytännön merkitystä varsinaiseen POST/PUT:iin
+// -> Voidaan kiertää tällä.
+builder.Services.AddControllers(
+    options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

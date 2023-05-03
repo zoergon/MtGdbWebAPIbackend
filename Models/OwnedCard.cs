@@ -14,6 +14,4 @@ public partial class OwnedCard
     public int LoginId { get; set; }
 
     public virtual AllCard IdNavigation { get; set; } = null!;
-
-    public virtual Login Login { get; set; } = null!;
 }

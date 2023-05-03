@@ -87,6 +87,7 @@ namespace MtGdbWebAPIbackend.Controllers
                 {
                     dek.Name = deck.Name;
                     dek.Format = deck.Format;
+                    dek.LoginId = deck.LoginId;
 
                     db.SaveChanges();
                     return Ok(dek.DeckId); // Palauttaa deck_id:n, jos kaikki meni onnistuneesti

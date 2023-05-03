@@ -18,6 +18,4 @@ public partial class Token
     public virtual Deck Deck { get; set; } = null!;
 
     public virtual AllCard IdNavigation { get; set; } = null!;
-
-    public virtual Login Login { get; set; } = null!;
 }

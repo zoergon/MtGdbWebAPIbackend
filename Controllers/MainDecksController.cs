@@ -19,13 +19,26 @@ namespace MtGdbWebAPIbackend.Controllers
         }
 
         // Hakee kaikki kortit main deckistä
+        //[HttpGet]
+        //[Route("")]
+        //public List<MainDeck> GetAllCards()
+        //{
+        //    List<MainDeck> main = db.MainDecks.ToList();
+
+        //    return main;
+        //}
+
+        // Hakee kaikki ja tekee joinin id:n ja deck_id:n perusteella
         [HttpGet]
         [Route("")]
         public List<MainDeck> GetAllCards()
         {
-            List<MainDeck> main = db.MainDecks.ToList();
+            var cards = from m in db.MainDecks
+                        join a in db.AllCards on m.Id equals a.Id
+                        join d in db.Decks on m.DeckId equals d.DeckId                        
+                        select m;
 
-            return main.ToList();
+            return cards.ToList();
         }
 
         // Hakee kortin nimen perusteella
@@ -78,6 +91,7 @@ namespace MtGdbWebAPIbackend.Controllers
                     mc.DeckId = card.DeckId;
                     mc.Id = card.Id;
                     mc.Count = card.Count;
+                    mc.LoginId = card.LoginId;
 
                     db.SaveChanges();
                     return Ok(mc.Id); // Palauttaa id:n, jos kaikki meni onnistuneesti

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MtGdbWebAPIbackend.Models;
+using System.Collections;
 
 namespace MtGdbWebAPIbackend.Controllers
 {
@@ -31,14 +33,63 @@ namespace MtGdbWebAPIbackend.Controllers
         // Hakee kaikki ja tekee joinin id:n ja deck_id:n perusteella
         [HttpGet]
         [Route("")]
-        public List<MainDeck> GetAllCards()
+        //public List<MainDeck> GetAllCards()
+        public object GetAllCards() // Muutettu objectiksi. Voiko tästä seurata mahdollisia ongelmia myöhemmin?
         {
-            var cards = from m in db.MainDecks
-                        join a in db.AllCards on m.Id equals a.Id
-                        join d in db.Decks on m.DeckId equals d.DeckId                        
-                        select m;
+            //List<MainDeck> md = new List<MainDeck>();
 
-            return cards.ToList();
+            var cards = (from m in db.MainDecks
+                         join a in db.AllCards on m.Id equals a.Id
+                         join d in db.Decks on m.DeckId equals d.DeckId
+                         select new {
+                             m.IndexId,
+                             m.DeckId,
+                             m.Id,
+                             a.Name,
+                             a.SetName,
+                             Deck = d.Name,
+                             m.Count,
+                             m.LoginId
+                         }).ToList();           
+
+            return cards;
+        }
+
+        // Hakee deckId:n perusteella
+        [HttpGet]
+        [Route("deckid/{deckId}")]
+        public async Task<ActionResult<IEnumerable<MainDeck>>> GetCardByDeckId(int deckId)
+        {
+            var cards = await (from m in db.MainDecks
+                               join a in db.AllCards on m.Id equals a.Id
+                               join d in db.Decks on m.DeckId equals d.DeckId
+                               where m.DeckId == deckId
+                               select new
+                               {
+                                   m.IndexId,
+                                   m.DeckId,
+                                   m.Id,
+                                   a.Name,
+                                   a.SetName,
+                                   Deck = d.Name,
+                                   m.Count,
+                                   m.LoginId
+                               }).ToListAsync();
+
+            //var cards = await db.MainDecks.Where(x => x.DeckId == deckId)
+            //    //.Include(dek  => dek.Deck.Name)
+            //    .ToListAsync();
+
+            //var cards = await db.MainDecks
+            //    .Where(i => i.DeckId == deckId)
+            //    .Select(i => new
+            //    {
+            //        i.DeckId
+            //    }).ToArrayAsync();
+            //.Include(d => d.Deck.Name)
+            //.ToArrayAsync();
+
+            return Ok(cards);
         }
 
         // Hakee kortin nimen perusteella

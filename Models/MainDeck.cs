@@ -18,4 +18,8 @@ public partial class MainDeck
     public virtual Deck Deck { get; set; } = null!;
 
     public virtual AllCard IdNavigation { get; set; } = null!;
+
+    //public virtual ICollection<Deck> Decks { get; set; } = new List<Deck>();
+
+    //public virtual ICollection<AllCard> AllCards { get; set; } = new List<AllCard>();
 }

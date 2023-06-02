@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MtGdbWebAPIbackend.Models;
 
 namespace MtGdbWebAPIbackend.Controllers
@@ -23,10 +24,25 @@ namespace MtGdbWebAPIbackend.Controllers
         [Route("")]
         public List<Deck> GetAllDecks()
         {
-            List<Deck> decks = db.Decks.ToList();
+            List<Deck> decks = db.Decks
+                .Include(cmdr => cmdr.Commanders)
+                .Include(comp => comp.Companions)
+                .Include(md => md.MainDecks)
+                .Include(mb => mb.Maybeboards)
+                .Include(sb => sb.Sideboards)
+                .Include(t => t.Tokens)
+                .ToList();
 
             return decks;
         }
+        //[HttpGet]
+        //[Route("")]
+        //public object GetAllDecks()
+        //{
+        //    var decks = db.Decks.Include(md => md.MainDecks).ToList();
+
+        //    return decks;
+        //}
 
         // Hakee deckin nimen perusteella
         [HttpGet]

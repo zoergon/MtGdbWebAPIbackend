@@ -25,7 +25,8 @@ namespace MtGdbWebAPIbackend.Controllers
         //[Route("")]
         //public List<MainDeck> GetAllCards()
         //{
-        //    List<MainDeck> main = db.MainDecks.ToList();
+        //    List<MainDeck> main = db.MainDecks
+        //        .ToList();
 
         //    return main;
         //}
@@ -36,12 +37,11 @@ namespace MtGdbWebAPIbackend.Controllers
         //public List<MainDeck> GetAllCards()
         public object GetAllCards() // Muutettu objectiksi. Voiko tästä seurata mahdollisia ongelmia myöhemmin?
         {
-            //List<MainDeck> md = new List<MainDeck>();
-
             var cards = (from m in db.MainDecks
                          join a in db.AllCards on m.Id equals a.Id
                          join d in db.Decks on m.DeckId equals d.DeckId
-                         select new {
+                         select new
+                         {
                              m.IndexId,
                              m.DeckId,
                              m.Id,
@@ -50,7 +50,7 @@ namespace MtGdbWebAPIbackend.Controllers
                              Deck = d.Name,
                              m.Count,
                              m.LoginId
-                         }).ToList();           
+                         }).ToList();
 
             return cards;
         }

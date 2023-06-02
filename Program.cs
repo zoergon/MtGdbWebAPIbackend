@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MtGdbWebAPIbackend.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,10 @@ builder.Services.AddDbContext<MtGdbContext>(options => options.UseSqlServer(
 // -> Voidaan kiertää tällä.
 builder.Services.AddControllers(
     options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
+
+// Jotta saisi alitaulut mukaan hakutuloksiin ilman erroreita (System.Text.Json.JsonException: A possible object cycle was detected.)
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

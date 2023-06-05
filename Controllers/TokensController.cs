@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MtGdbWebAPIbackend.Models;
 
 namespace MtGdbWebAPIbackend.Controllers
@@ -26,6 +27,30 @@ namespace MtGdbWebAPIbackend.Controllers
             List<Token> token = db.Tokens.ToList();
 
             return token.ToList();
+        }
+
+        // Hakee deckId:n perusteella
+        [HttpGet]
+        [Route("deckid/{deckId}")]
+        public async Task<ActionResult<IEnumerable<Token>>> GetCardByDeckId(int deckId)
+        {
+            var cards = await (from t in db.Tokens
+                               join a in db.AllCards on t.Id equals a.Id
+                               join d in db.Decks on t.DeckId equals d.DeckId
+                               where t.DeckId == deckId
+                               select new
+                               {
+                                   t.IndexId,
+                                   t.DeckId,
+                                   t.Id,
+                                   a.Name,
+                                   a.SetName,
+                                   Deck = d.Name,
+                                   t.Count,
+                                   t.LoginId
+                               }).ToListAsync();
+
+            return Ok(cards);
         }
 
         // Hakee token-kortin nimen perusteella

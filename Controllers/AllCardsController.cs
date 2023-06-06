@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MtGdbWebAPIbackend.Models;
 
 namespace MtGdbWebAPIbackend.Controllers
@@ -32,11 +33,32 @@ namespace MtGdbWebAPIbackend.Controllers
         // Hakee id:n mukaisen yhden kortin
         [HttpGet]
         [Route("id/{id}")]
-        public AllCard GetOneCardById(string id)
-        {
-            AllCard card = db.AllCards.Find(id); // Find-metodi hakee AINA VAIN YHDEN RIVIN PÄÄAVAIMELLA
+        //public AllCard GetOneCardById(string id)
+        //{
+        //    AllCard card = db.AllCards.Find(id); // Find-metodi hakee AINA VAIN YHDEN RIVIN PÄÄAVAIMELLA
 
-            return card;
+        //    return card;
+        //}
+        public async Task<ActionResult<IEnumerable<MainDeck>>> GetOneCardById(string id)
+        {
+            var cards = await db.AllCards.
+                               Where(ac => ac.Id == id)
+                               .ToListAsync();
+
+            //var cards = await db.MainDecks.Where(x => x.DeckId == deckId)
+            //    //.Include(dek  => dek.Deck.Name)
+            //    .ToListAsync();
+
+            //var cards = await db.MainDecks
+            //    .Where(i => i.DeckId == deckId)
+            //    .Select(i => new
+            //    {
+            //        i.DeckId
+            //    }).ToArrayAsync();
+            //.Include(d => d.Deck.Name)
+            //.ToArrayAsync();
+
+            return Ok(cards);
         }
 
         // Hakee kortin nimen perusteella kaikki hakutulokset

@@ -31,8 +31,8 @@ namespace MtGdbWebAPIbackend.Controllers
 
         // Hakee id:n mukaisen yhden kortin
         [HttpGet]
-        [Route("{id}")]
-        public AllCard GetOneCard(string id)
+        [Route("id/{id}")]
+        public AllCard GetOneCardById(string id)
         {
             AllCard card = db.AllCards.Find(id); // Find-metodi hakee AINA VAIN YHDEN RIVIN PÄÄAVAIMELLA
 

@@ -17,11 +17,15 @@ public partial class MtGdbContext : DbContext
 
     public virtual DbSet<AllCard> AllCards { get; set; }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Commander> Commanders { get; set; }
 
     public virtual DbSet<Companion> Companions { get; set; }
 
     public virtual DbSet<Deck> Decks { get; set; }
+
+    public virtual DbSet<Format> Formats { get; set; }
 
     public virtual DbSet<Login> Logins { get; set; }
 
@@ -51,12 +55,8 @@ public partial class MtGdbContext : DbContext
             entity.Property(e => e.Artist)
                 .HasMaxLength(100)
                 .HasColumnName("artist");
-            entity.Property(e => e.ArtistIds)
-                .HasMaxLength(50)
-                .HasColumnName("artist_ids");
-            entity.Property(e => e.AttractionLights)
-                .HasMaxLength(30)
-                .HasColumnName("attraction_lights");
+            entity.Property(e => e.ArtistIds).HasColumnName("artist_ids");
+            entity.Property(e => e.AttractionLights).HasColumnName("attraction_lights");
             entity.Property(e => e.Booster).HasColumnName("booster");
             entity.Property(e => e.BorderColor)
                 .HasMaxLength(10)
@@ -70,36 +70,27 @@ public partial class MtGdbContext : DbContext
             entity.Property(e => e.CollectorNumber)
                 .HasMaxLength(10)
                 .HasColumnName("collector_number");
-            entity.Property(e => e.ColorIdentity)
-                .HasMaxLength(25)
-                .HasColumnName("color_identity");
-            entity.Property(e => e.ColorIndicator)
-                .HasMaxLength(25)
-                .HasColumnName("color_indicator");
-            entity.Property(e => e.Colors)
-                .HasMaxLength(25)
-                .HasColumnName("colors");
+            entity.Property(e => e.ColorIdentity).HasColumnName("color_identity");
+            entity.Property(e => e.ColorIndicator).HasColumnName("color_indicator");
+            entity.Property(e => e.Colors).HasColumnName("colors");
             entity.Property(e => e.ContentWarning).HasColumnName("content_warning");
             entity.Property(e => e.Digital).HasColumnName("digital");
             entity.Property(e => e.EdhrecRank).HasColumnName("edhrec_rank");
-            entity.Property(e => e.Finishes)
-                .HasMaxLength(50)
-                .HasColumnName("finishes");
+            entity.Property(e => e.Finishes).HasColumnName("finishes");
             entity.Property(e => e.FlavorName)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("flavor_name");
-            entity.Property(e => e.FlavorText).HasColumnName("flavor_text");
+            entity.Property(e => e.FlavorText)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
+                .HasColumnName("flavor_text");
             entity.Property(e => e.Foil).HasColumnName("foil");
             entity.Property(e => e.Frame)
                 .HasMaxLength(10)
                 .HasColumnName("frame");
-            entity.Property(e => e.FrameEffects)
-                .HasMaxLength(50)
-                .HasColumnName("frame_effects");
+            entity.Property(e => e.FrameEffects).HasColumnName("frame_effects");
             entity.Property(e => e.FullArt).HasColumnName("full_art");
-            entity.Property(e => e.Games)
-                .HasMaxLength(25)
-                .HasColumnName("games");
+            entity.Property(e => e.Games).HasColumnName("games");
             entity.Property(e => e.HandModifier)
                 .HasMaxLength(10)
                 .HasColumnName("hand_modifier");
@@ -113,8 +104,7 @@ public partial class MtGdbContext : DbContext
             entity.Property(e => e.ImageUris).HasColumnName("image_uris");
             entity.Property(e => e.Keywords).HasColumnName("keywords");
             entity.Property(e => e.Lang)
-                .HasMaxLength(5)
-                .IsFixedLength()
+                .HasMaxLength(3)
                 .HasColumnName("lang");
             entity.Property(e => e.Layout)
                 .HasMaxLength(25)
@@ -131,11 +121,10 @@ public partial class MtGdbContext : DbContext
                 .HasColumnName("mana_cost");
             entity.Property(e => e.MtgoFoilId).HasColumnName("mtgo_foil_id");
             entity.Property(e => e.MtgoId).HasColumnName("mtgo_id");
-            entity.Property(e => e.MultiverseIds)
-                .HasMaxLength(50)
-                .HasColumnName("multiverse_ids");
+            entity.Property(e => e.MultiverseIds).HasColumnName("multiverse_ids");
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("name");
             entity.Property(e => e.Nonfoil).HasColumnName("nonfoil");
             entity.Property(e => e.Object)
@@ -144,32 +133,32 @@ public partial class MtGdbContext : DbContext
             entity.Property(e => e.OracleId)
                 .HasMaxLength(50)
                 .HasColumnName("oracle_id");
-            entity.Property(e => e.OracleText).HasColumnName("oracle_text");
+            entity.Property(e => e.OracleText)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
+                .HasColumnName("oracle_text");
             entity.Property(e => e.Oversized).HasColumnName("oversized");
             entity.Property(e => e.PennyRank).HasColumnName("penny_rank");
             entity.Property(e => e.Power)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("power");
-            entity.Property(e => e.PreviewedAt)
-                .HasColumnType("date")
-                .HasColumnName("previewed_at");
+            entity.Property(e => e.Preview).HasColumnName("preview");
             entity.Property(e => e.Prices).HasColumnName("prices");
             entity.Property(e => e.PrintedName)
                 .HasMaxLength(100)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("printed_name");
-            entity.Property(e => e.PrintedText).HasColumnName("printed_text");
+            entity.Property(e => e.PrintedText)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
+                .HasColumnName("printed_text");
             entity.Property(e => e.PrintedTypeLine)
                 .HasMaxLength(100)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("printed_type_line");
             entity.Property(e => e.PrintsSearchUri).HasColumnName("prints_search_uri");
-            entity.Property(e => e.ProducedMana)
-                .HasMaxLength(50)
-                .HasColumnName("produced_mana");
+            entity.Property(e => e.ProducedMana).HasColumnName("produced_mana");
             entity.Property(e => e.Promo).HasColumnName("promo");
-            entity.Property(e => e.PromoTypes)
-                .HasMaxLength(50)
-                .HasColumnName("promo_types");
-            entity.Property(e => e.PurchaseUris).HasColumnName("purchase_uris");
+            entity.Property(e => e.PromoTypes).HasColumnName("promo_types");
             entity.Property(e => e.Rarity)
                 .HasMaxLength(15)
                 .HasColumnName("rarity");
@@ -193,6 +182,7 @@ public partial class MtGdbContext : DbContext
                 .HasColumnName("set_id");
             entity.Property(e => e.SetName)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("set_name");
             entity.Property(e => e.SetSearchUri).HasColumnName("set_search_uri");
             entity.Property(e => e.SetType)
@@ -200,16 +190,17 @@ public partial class MtGdbContext : DbContext
                 .HasColumnName("set_type");
             entity.Property(e => e.SetUri).HasColumnName("set_uri");
             entity.Property(e => e.Source).HasColumnName("source");
-            entity.Property(e => e.SourceUri).HasColumnName("source_uri");
             entity.Property(e => e.StorySpotlight).HasColumnName("story_spotlight");
             entity.Property(e => e.TcgplayerEtchedId).HasColumnName("tcgplayer_etched_id");
             entity.Property(e => e.TcgplayerId).HasColumnName("tcgplayer_id");
             entity.Property(e => e.Textless).HasColumnName("textless");
             entity.Property(e => e.Toughness)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("toughness");
             entity.Property(e => e.TypeLine)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("type_line");
             entity.Property(e => e.Uri).HasColumnName("uri");
             entity.Property(e => e.Variation).HasColumnName("variation");
@@ -217,6 +208,15 @@ public partial class MtGdbContext : DbContext
             entity.Property(e => e.Watermark)
                 .HasMaxLength(15)
                 .HasColumnName("watermark");
+        });
+
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.Property(e => e.CategoryId).HasColumnName("category_id");
+            entity.Property(e => e.Category1)
+                .HasMaxLength(50)
+                .HasColumnName("category");
+            entity.Property(e => e.LoginId).HasColumnName("login_id");
         });
 
         modelBuilder.Entity<Commander>(entity =>
@@ -268,13 +268,24 @@ public partial class MtGdbContext : DbContext
         modelBuilder.Entity<Deck>(entity =>
         {
             entity.Property(e => e.DeckId).HasColumnName("deck_id");
-            entity.Property(e => e.Format)
-                .HasMaxLength(50)
-                .HasColumnName("format");
+            entity.Property(e => e.FormatId).HasColumnName("format_id");
             entity.Property(e => e.LoginId).HasColumnName("login_id");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .HasColumnName("name");
+
+            entity.HasOne(d => d.Format).WithMany(p => p.Decks)
+                .HasForeignKey(d => d.FormatId)
+                .HasConstraintName("FK_Decks_Formats");
+        });
+
+        modelBuilder.Entity<Format>(entity =>
+        {
+            entity.Property(e => e.FormatId).HasColumnName("format_id");
+            entity.Property(e => e.Format1)
+                .HasMaxLength(100)
+                .HasColumnName("format");
+            entity.Property(e => e.LoginId).HasColumnName("login_id");
         });
 
         modelBuilder.Entity<Login>(entity =>

@@ -62,7 +62,8 @@ namespace MtGdbWebAPIbackend.Controllers
         public List<Deck> GetDeckByFormat(string format)
         {
             var decks = from c in db.Decks
-                        where c.Format == format
+                        join f in db.Formats on c.FormatId equals f.FormatId
+                        where f.Format1 == format
                         select c;
 
             return decks.ToList();

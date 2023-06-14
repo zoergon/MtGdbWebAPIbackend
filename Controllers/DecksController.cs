@@ -31,6 +31,7 @@ namespace MtGdbWebAPIbackend.Controllers
                 .Include(mb => mb.Maybeboards)
                 .Include(sb => sb.Sideboards)
                 .Include(t => t.Tokens)
+                .Include(f => f.Format)
                 .ToList();
 
             return decks;
@@ -63,7 +64,7 @@ namespace MtGdbWebAPIbackend.Controllers
         {
             var decks = from c in db.Decks
                         join f in db.Formats on c.FormatId equals f.FormatId
-                        where f.Format1 == format
+                        where f.FormatName == format
                         select c;
 
             return decks.ToList();
@@ -103,7 +104,7 @@ namespace MtGdbWebAPIbackend.Controllers
                 if (dek != null)
                 {
                     dek.Name = deck.Name;
-                    dek.Format = deck.Format;
+                    dek.FormatId = deck.FormatId;
                     dek.LoginId = deck.LoginId;
 
                     db.SaveChanges();

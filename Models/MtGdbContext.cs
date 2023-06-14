@@ -282,7 +282,7 @@ public partial class MtGdbContext : DbContext
         modelBuilder.Entity<Format>(entity =>
         {
             entity.Property(e => e.FormatId).HasColumnName("format_id");
-            entity.Property(e => e.Format1)
+            entity.Property(e => e.FormatName)
                 .HasMaxLength(100)
                 .HasColumnName("format");
             entity.Property(e => e.LoginId).HasColumnName("login_id");

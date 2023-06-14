@@ -7,7 +7,7 @@ public partial class Format
 {
     public int FormatId { get; set; }
 
-    public string Format1 { get; set; } = null!;
+    public string FormatName { get; set; } = null!;
 
     public int LoginId { get; set; }
 

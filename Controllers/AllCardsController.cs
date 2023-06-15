@@ -67,7 +67,7 @@ namespace MtGdbWebAPIbackend.Controllers
         public List<AllCard> GetCards(string key) // Hakee jollain tiedolla mätsäävät rivit
         {
             var cards = from n in db.AllCards
-                                where n.Name == key
+                                where n.Name == key // Kokonaisuudessaan ja tarkalleen
                                 select n;
 
             return cards.ToList();

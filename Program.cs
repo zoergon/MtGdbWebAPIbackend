@@ -21,7 +21,7 @@ builder.Services.AddCors(options =>
 // jos olisi useampi yhteys > "paikallinen" > "muuksi"
 
 builder.Services.AddDbContext<MtGdbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("paikallinen")
+    builder.Configuration.GetConnectionString("asusStrix")
     ));
 
 // Non-nullable kentät, jotka aiheuttavat ongelmia POST/PUT-metodeissa, joilla ei pitäisi olla käytännön merkitystä varsinaiseen POST/PUT:iin

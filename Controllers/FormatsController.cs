@@ -18,8 +18,7 @@ namespace MtGdbWebAPIbackend.Controllers
         {
             db = dbparam;
         }
-
-        // Hakee kaikki deckit
+                
         [HttpGet]
         [Route("")]
         public List<Format> GetAll()
@@ -34,6 +33,18 @@ namespace MtGdbWebAPIbackend.Controllers
                 .ToList();
 
             return formats;
+        }
+
+        // Hakee formatin id:n perusteella nimen
+        [HttpGet]
+        [Route("id/{id}")]
+        public List<Format> GetFormat(int id)
+        {
+            var formats = from f in db.Formats
+                        where f.FormatId == id
+                        select f;
+
+            return formats.ToList();
         }
     }
 }

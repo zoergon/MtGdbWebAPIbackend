@@ -41,7 +41,7 @@ public partial class MtGdbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-IIFG2ST\\SQLEXPRESS;Database=MtGdb;Trusted_Connection=True;TrustServerCertificate=True;");
+        => optionsBuilder.UseSqlServer("Server=DESKTOP-U1GQ57A\\SQLEXPRESS;Database=MtGdb;Trusted_Connection=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -79,8 +79,11 @@ public partial class MtGdbContext : DbContext
             entity.Property(e => e.Finishes).HasColumnName("finishes");
             entity.Property(e => e.FlavorName)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("flavor_name");
-            entity.Property(e => e.FlavorText).HasColumnName("flavor_text");
+            entity.Property(e => e.FlavorText)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
+                .HasColumnName("flavor_text");
             entity.Property(e => e.Foil).HasColumnName("foil");
             entity.Property(e => e.Frame)
                 .HasMaxLength(10)
@@ -121,6 +124,7 @@ public partial class MtGdbContext : DbContext
             entity.Property(e => e.MultiverseIds).HasColumnName("multiverse_ids");
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("name");
             entity.Property(e => e.Nonfoil).HasColumnName("nonfoil");
             entity.Property(e => e.Object)
@@ -129,20 +133,27 @@ public partial class MtGdbContext : DbContext
             entity.Property(e => e.OracleId)
                 .HasMaxLength(50)
                 .HasColumnName("oracle_id");
-            entity.Property(e => e.OracleText).HasColumnName("oracle_text");
+            entity.Property(e => e.OracleText)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
+                .HasColumnName("oracle_text");
             entity.Property(e => e.Oversized).HasColumnName("oversized");
             entity.Property(e => e.PennyRank).HasColumnName("penny_rank");
             entity.Property(e => e.Power)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("power");
             entity.Property(e => e.Preview).HasColumnName("preview");
             entity.Property(e => e.Prices).HasColumnName("prices");
             entity.Property(e => e.PrintedName)
                 .HasMaxLength(100)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("printed_name");
-            entity.Property(e => e.PrintedText).HasColumnName("printed_text");
+            entity.Property(e => e.PrintedText)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
+                .HasColumnName("printed_text");
             entity.Property(e => e.PrintedTypeLine)
                 .HasMaxLength(100)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("printed_type_line");
             entity.Property(e => e.PrintsSearchUri).HasColumnName("prints_search_uri");
             entity.Property(e => e.ProducedMana).HasColumnName("produced_mana");
@@ -171,6 +182,7 @@ public partial class MtGdbContext : DbContext
                 .HasColumnName("set_id");
             entity.Property(e => e.SetName)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("set_name");
             entity.Property(e => e.SetSearchUri).HasColumnName("set_search_uri");
             entity.Property(e => e.SetType)
@@ -184,9 +196,11 @@ public partial class MtGdbContext : DbContext
             entity.Property(e => e.Textless).HasColumnName("textless");
             entity.Property(e => e.Toughness)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("toughness");
             entity.Property(e => e.TypeLine)
                 .HasMaxLength(50)
+                .UseCollation("Latin1_General_100_CI_AI_SC_UTF8")
                 .HasColumnName("type_line");
             entity.Property(e => e.Uri).HasColumnName("uri");
             entity.Property(e => e.Variation).HasColumnName("variation");

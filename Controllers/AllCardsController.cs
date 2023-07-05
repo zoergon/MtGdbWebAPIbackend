@@ -73,6 +73,18 @@ namespace MtGdbWebAPIbackend.Controllers
             return cards.ToList();
         }
 
+        // Hakee kortin nimen perusteella kaikki hakutulokset
+        [HttpGet]
+        [Route("partialname/{key}")]
+        public List<AllCard> GetPartialName(string key) // Hakee osittaisella nimen perusteella
+        {
+            var cards = from n in db.AllCards
+                        where (n.Name.ToUpper().Contains(key.ToUpper())) // Kokonaisuudessaan ja tarkalleen
+                        select n;
+
+            return cards.ToList();
+        }
+
         // Hakee artistin nimen perusteella kaikki hakutulokset
         [HttpGet]
         [Route("artist/{key}")]

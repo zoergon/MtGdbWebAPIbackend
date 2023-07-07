@@ -25,6 +25,8 @@ public partial class MtGdbContext : DbContext
 
     public virtual DbSet<Deck> Decks { get; set; }
 
+    public virtual DbSet<DeckPart> DeckParts { get; set; }
+
     public virtual DbSet<Format> Formats { get; set; }
 
     public virtual DbSet<Login> Logins { get; set; }
@@ -277,6 +279,22 @@ public partial class MtGdbContext : DbContext
             entity.HasOne(d => d.Format).WithMany(p => p.Decks)
                 .HasForeignKey(d => d.FormatId)
                 .HasConstraintName("FK_Decks_Formats");
+        });
+
+        modelBuilder.Entity<DeckPart>(entity =>
+        {
+            entity.HasKey(e => e.PartId);
+
+            entity.Property(e => e.PartId).HasColumnName("part_id");
+            entity.Property(e => e.LoginId).HasColumnName("login_id");
+            entity.Property(e => e.Part)
+                .HasMaxLength(50)
+                .HasColumnName("part");
+
+            entity.HasOne(d => d.Login).WithMany(p => p.DeckParts)
+                .HasForeignKey(d => d.LoginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DeckParts_Logins");
         });
 
         modelBuilder.Entity<Format>(entity =>

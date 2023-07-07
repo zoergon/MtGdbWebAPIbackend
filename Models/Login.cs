@@ -12,4 +12,6 @@ public partial class Login
     public string Password { get; set; } = null!;
 
     public bool Admin { get; set; }
+
+    public virtual ICollection<DeckPart> DeckParts { get; set; } = new List<DeckPart>();
 }

@@ -47,6 +47,7 @@ namespace MtGdbWebAPIbackend.Controllers
                                    a.SetName,
                                    Deck = d.Name,
                                    s.Count,
+                                   a.ImageUris,
                                    s.LoginId
                                }).ToListAsync();
 

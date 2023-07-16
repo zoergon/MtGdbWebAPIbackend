@@ -39,7 +39,7 @@ namespace MtGdbWebAPIbackend.Controllers
 
         //    return card;
         //}
-        public async Task<ActionResult<IEnumerable<MainDeck>>> GetOneCardById(string id)
+        public async Task<ActionResult<IEnumerable<AllCard>>> GetOneCardById(string id)
         {
             var cards = await db.AllCards.
                                Where(ac => ac.Id == id)

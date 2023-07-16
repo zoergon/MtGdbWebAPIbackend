@@ -363,9 +363,9 @@ public partial class MtGdbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Maybeboards_AllCards");
         });
-
+                
         modelBuilder.Entity<OwnedCard>(entity =>
-        {
+        {            
             entity.HasKey(e => e.IndexId).HasName("PK_OwnedCards_1");
 
             entity.Property(e => e.IndexId).HasColumnName("index_id");

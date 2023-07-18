@@ -242,6 +242,11 @@ public partial class MtGdbContext : DbContext
                 .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Commanders_AllCards");
+
+            entity.HasOne(d => d.Login).WithMany(p => p.Commanders)
+                .HasForeignKey(d => d.LoginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Commanders_Logins");
         });
 
         modelBuilder.Entity<Companion>(entity =>
@@ -265,6 +270,11 @@ public partial class MtGdbContext : DbContext
                 .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Companions_AllCards");
+
+            entity.HasOne(d => d.Login).WithMany(p => p.Companions)
+                .HasForeignKey(d => d.LoginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Companions_Logins");
         });
 
         modelBuilder.Entity<Deck>(entity =>
@@ -279,6 +289,11 @@ public partial class MtGdbContext : DbContext
             entity.HasOne(d => d.Format).WithMany(p => p.Decks)
                 .HasForeignKey(d => d.FormatId)
                 .HasConstraintName("FK_Decks_Formats");
+
+            entity.HasOne(d => d.Login).WithMany(p => p.Decks)
+                .HasForeignKey(d => d.LoginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Decks_Logins");
         });
 
         modelBuilder.Entity<DeckPart>(entity =>
@@ -349,6 +364,11 @@ public partial class MtGdbContext : DbContext
                 .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_MainDecks_AllCards");
+
+            entity.HasOne(d => d.Login).WithMany(p => p.MainDecks)
+                .HasForeignKey(d => d.LoginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_MainDecks_Logins");
         });
 
         modelBuilder.Entity<Maybeboard>(entity =>
@@ -372,6 +392,11 @@ public partial class MtGdbContext : DbContext
                 .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Maybeboards_AllCards");
+
+            entity.HasOne(d => d.Login).WithMany(p => p.Maybeboards)
+                .HasForeignKey(d => d.LoginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Maybeboards_Logins");
         });
 
         modelBuilder.Entity<OwnedCard>(entity =>
@@ -389,6 +414,11 @@ public partial class MtGdbContext : DbContext
                 .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_OwnedCards_AllCards");
+
+            entity.HasOne(d => d.Login).WithMany(p => p.OwnedCards)
+                .HasForeignKey(d => d.LoginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OwnedCards_Logins");
         });
 
         modelBuilder.Entity<Sideboard>(entity =>
@@ -412,6 +442,11 @@ public partial class MtGdbContext : DbContext
                 .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Sideboards_AllCards");
+
+            entity.HasOne(d => d.Login).WithMany(p => p.Sideboards)
+                .HasForeignKey(d => d.LoginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Sideboards_Logins");
         });
 
         modelBuilder.Entity<Token>(entity =>
@@ -435,6 +470,11 @@ public partial class MtGdbContext : DbContext
                 .HasForeignKey(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Tokens_AllCards");
+
+            entity.HasOne(d => d.Login).WithMany(p => p.Tokens)
+                .HasForeignKey(d => d.LoginId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Tokens_Logins");
         });
 
         OnModelCreatingPartial(modelBuilder);

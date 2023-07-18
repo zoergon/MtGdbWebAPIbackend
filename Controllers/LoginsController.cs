@@ -60,6 +60,10 @@ namespace MtGdbWebAPIbackend.Controllers
                 Login user = db.Logins.Find(key);
                 if (user != null)
                 {
+                    user.FirstName = u.FirstName;
+                    user.LastName = u.LastName;
+                    user.Email = u.Email;
+                    user.AccesslevelId = u.AccesslevelId;
                     user.Username = u.Username;
                     user.Password = u.Password;
                     user.Admin = u.Admin;

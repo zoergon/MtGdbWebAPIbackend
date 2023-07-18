@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MtGdbWebAPIbackend.Controllers;
@@ -6,14 +8,15 @@ using MtGdbWebAPIbackend.Models;
 
 namespace MtGdbWebAPIbackend.Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("api/[controller]")]
     [ApiController]
     public class CommandersController : ControllerBase
     {
-        private readonly MtGdbContext db = new MtGdbContext();
+        //private readonly MtGdbContext db = new MtGdbContext();
 
         // Depency Injection -tyyli
-        //private readonly MtGdbContext db;
+        private readonly MtGdbContext db;
 
         public CommandersController(MtGdbContext dbparam)
         {

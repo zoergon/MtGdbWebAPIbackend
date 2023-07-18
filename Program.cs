@@ -1,6 +1,11 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using MtGdbWebAPIbackend.Models;
 using System.Text.Json.Serialization;
+using Microsoft.IdentityModel.Tokens;
+using MtGdbWebAPIbackend.Services;
+using MtGdbWebAPIbackend.Services.Interfaces;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +41,37 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// ---------------- tuodaan appSettings.jsoniin tekm‰mme AppSettings m‰‰ritys ----------
+
+var appSettingsSection = builder.Configuration.GetSection("AppSettings");
+builder.Services.Configure<AppSettings>(appSettingsSection);
+
+// ---------------- JWT-Autentikaatio ----------
+
+var appSettings = appSettingsSection.Get<AppSettings>();
+var key = Encoding.ASCII.GetBytes(appSettings.Key);
+
+builder.Services.AddAuthentication(au =>
+{
+    au.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    au.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(jwt =>
+{
+    jwt.RequireHttpsMetadata = false;
+    jwt.SaveToken = true;
+    jwt.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = false,
+        ValidateAudience = false,
+    };
+});
+
+builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
+
+// ---------------- Jwt-m‰‰ritys p‰‰ttyy ----------
 
 var app = builder.Build();
 

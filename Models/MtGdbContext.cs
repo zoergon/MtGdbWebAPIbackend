@@ -309,7 +309,17 @@ public partial class MtGdbContext : DbContext
         modelBuilder.Entity<Login>(entity =>
         {
             entity.Property(e => e.LoginId).HasColumnName("login_id");
+            entity.Property(e => e.AccesslevelId).HasColumnName("accesslevel_id");
             entity.Property(e => e.Admin).HasColumnName("admin");
+            entity.Property(e => e.Email)
+                .HasMaxLength(100)
+                .HasColumnName("email");
+            entity.Property(e => e.FirstName)
+                .HasMaxLength(100)
+                .HasColumnName("first_name");
+            entity.Property(e => e.LastName)
+                .HasMaxLength(100)
+                .HasColumnName("last_name");
             entity.Property(e => e.Password)
                 .HasMaxLength(50)
                 .HasColumnName("password");
@@ -363,9 +373,9 @@ public partial class MtGdbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Maybeboards_AllCards");
         });
-                
+
         modelBuilder.Entity<OwnedCard>(entity =>
-        {            
+        {
             entity.HasKey(e => e.IndexId).HasName("PK_OwnedCards_1");
 
             entity.Property(e => e.IndexId).HasColumnName("index_id");

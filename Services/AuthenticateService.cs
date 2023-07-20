@@ -57,6 +57,7 @@ namespace MtGdbWebAPIbackend.Services
             LoggedUser loggedUser = new LoggedUser();
 
             loggedUser.Username = foundUser.Username;
+            loggedUser.LoginId = foundUser.LoginId;
             loggedUser.AccesslevelId = foundUser.AccesslevelId;
             loggedUser.Token = tokenHandler.WriteToken(token);
 

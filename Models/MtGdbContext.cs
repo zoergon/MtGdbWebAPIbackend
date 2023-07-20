@@ -235,7 +235,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Commanders)
                 .HasForeignKey(d => d.DeckId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Commanders_Decks");
 
             entity.HasOne(d => d.IdNavigation).WithMany(p => p.Commanders)
@@ -263,7 +264,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Companions)
                 .HasForeignKey(d => d.DeckId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Companions_Decks");
 
             entity.HasOne(d => d.IdNavigation).WithMany(p => p.Companions)
@@ -276,6 +278,14 @@ public partial class MtGdbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Companions_Logins");
         });
+
+        modelBuilder.Entity<Deck>().Navigation(e => e.Commanders).AutoInclude();
+        modelBuilder.Entity<Deck>().Navigation(e => e.Companions).AutoInclude();
+        modelBuilder.Entity<Deck>().Navigation(e => e.Format).AutoInclude();
+        modelBuilder.Entity<Deck>().Navigation(e => e.MainDecks).AutoInclude();
+        modelBuilder.Entity<Deck>().Navigation(e => e.Maybeboards).AutoInclude();
+        modelBuilder.Entity<Deck>().Navigation(e => e.Sideboards).AutoInclude();
+        modelBuilder.Entity<Deck>().Navigation(e => e.Tokens).AutoInclude();
 
         modelBuilder.Entity<Deck>(entity =>
         {
@@ -357,7 +367,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Deck).WithMany(p => p.MainDecks)
                 .HasForeignKey(d => d.DeckId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_MainDecks_Decks");
 
             entity.HasOne(d => d.IdNavigation).WithMany(p => p.MainDecks)
@@ -385,7 +396,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Maybeboards)
                 .HasForeignKey(d => d.DeckId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Maybeboards_Decks");
 
             entity.HasOne(d => d.IdNavigation).WithMany(p => p.Maybeboards)
@@ -398,6 +410,8 @@ public partial class MtGdbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Maybeboards_Logins");
         });
+
+        modelBuilder.Entity<OwnedCard>().Navigation(e => e.IdNavigation).AutoInclude();        
 
         modelBuilder.Entity<OwnedCard>(entity =>
         {
@@ -435,7 +449,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Sideboards)
                 .HasForeignKey(d => d.DeckId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Sideboards_Decks");
 
             entity.HasOne(d => d.IdNavigation).WithMany(p => p.Sideboards)
@@ -463,7 +478,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Deck).WithMany(p => p.Tokens)
                 .HasForeignKey(d => d.DeckId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Tokens_Decks");
 
             entity.HasOne(d => d.IdNavigation).WithMany(p => p.Tokens)

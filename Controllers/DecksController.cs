@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.SqlServer.Server;
 using MtGdbWebAPIbackend.Models;
 
 namespace MtGdbWebAPIbackend.Controllers
@@ -28,13 +29,13 @@ namespace MtGdbWebAPIbackend.Controllers
         public List<Deck> GetAllDecks()
         {
             List<Deck> decks = db.Decks
-                .Include(cmdr => cmdr.Commanders)
-                .Include(comp => comp.Companions)
-                .Include(md => md.MainDecks)
-                .Include(mb => mb.Maybeboards)
-                .Include(sb => sb.Sideboards)
-                .Include(t => t.Tokens)
-                .Include(f => f.Format)
+                //.Include(cmdr => cmdr.Commanders)
+                //.Include(comp => comp.Companions)
+                //.Include(md => md.MainDecks)
+                //.Include(mb => mb.Maybeboards)
+                //.Include(sb => sb.Sideboards)
+                //.Include(t => t.Tokens)
+                //.Include(f => f.Format)
                 .ToList();
 
             return decks;
@@ -69,6 +70,20 @@ namespace MtGdbWebAPIbackend.Controllers
                         join f in db.Formats on c.FormatId equals f.FormatId
                         where f.FormatName == format
                         select c;
+
+            return decks.ToList();
+        }
+
+        // Hakee deckit loginId:n perusteella
+        [HttpGet]
+        [Route("loginid/{loginid}")]
+        public List<Deck> GetDecksByLogindId(int loginid)
+        {
+            var decks = from d in db.Decks
+                        //join l in db.Logins on d.LoginId equals l.LoginId
+                        //where l.FormatName == format
+                        where d.LoginId == loginid
+                        select d;
 
             return decks.ToList();
         }

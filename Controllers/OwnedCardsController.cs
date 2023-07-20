@@ -32,7 +32,20 @@ namespace MtGdbWebAPIbackend.Controllers
                 .ToList();
 
             return cards;
+        }
 
+        // Hakee kortit usernamen perusteella
+        [HttpGet]
+        [Route("loginid/{loginid}")]
+        public List<OwnedCard> GetCardsByUsername(int loginid)
+        {
+            var cards = from c in db.OwnedCards
+                        //join l in db.Logins on c.LoginId equals l.LoginId
+                        //where l.FormatName == format
+                        where c.LoginId == loginid
+                        select c;
+
+            return cards.ToList();
         }
 
         //[HttpGet]

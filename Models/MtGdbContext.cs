@@ -246,7 +246,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.Commanders)
                 .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Commanders_Logins");
         });
 
@@ -275,7 +276,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.Companions)
                 .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Companions_Logins");
         });
 
@@ -286,6 +288,7 @@ public partial class MtGdbContext : DbContext
         modelBuilder.Entity<Deck>().Navigation(e => e.Maybeboards).AutoInclude();
         modelBuilder.Entity<Deck>().Navigation(e => e.Sideboards).AutoInclude();
         modelBuilder.Entity<Deck>().Navigation(e => e.Tokens).AutoInclude();
+
 
         modelBuilder.Entity<Deck>(entity =>
         {
@@ -302,7 +305,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.Decks)
                 .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Decks_Logins");
         });
 
@@ -318,7 +322,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.DeckParts)
                 .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_DeckParts_Logins");
         });
 
@@ -330,6 +335,16 @@ public partial class MtGdbContext : DbContext
                 .HasColumnName("format");
             entity.Property(e => e.LoginId).HasColumnName("login_id");
         });
+
+        //modelBuilder.Entity<Login>().Navigation(e => e.Decks).AutoInclude();
+        //modelBuilder.Entity<Login>().Navigation(e => e.Commanders).AutoInclude();
+        //modelBuilder.Entity<Login>().Navigation(e => e.Companions).AutoInclude();
+        //modelBuilder.Entity<Login>().Navigation(e => e.DeckParts).AutoInclude();
+        //modelBuilder.Entity<Login>().Navigation(e => e.MainDecks).AutoInclude();
+        //modelBuilder.Entity<Login>().Navigation(e => e.Maybeboards).AutoInclude();
+        //modelBuilder.Entity<Login>().Navigation(e => e.Sideboards).AutoInclude();
+        //modelBuilder.Entity<Login>().Navigation(e => e.Tokens).AutoInclude();
+        //modelBuilder.Entity<Login>().Navigation(e => e.OwnedCards).AutoInclude();
 
         modelBuilder.Entity<Login>(entity =>
         {
@@ -378,7 +393,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.MainDecks)
                 .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_MainDecks_Logins");
         });
 
@@ -407,11 +423,10 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.Maybeboards)
                 .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Maybeboards_Logins");
         });
-
-        modelBuilder.Entity<OwnedCard>().Navigation(e => e.IdNavigation).AutoInclude();        
 
         modelBuilder.Entity<OwnedCard>(entity =>
         {
@@ -431,7 +446,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.OwnedCards)
                 .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_OwnedCards_Logins");
         });
 
@@ -460,7 +476,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.Sideboards)
                 .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Sideboards_Logins");
         });
 
@@ -489,7 +506,8 @@ public partial class MtGdbContext : DbContext
 
             entity.HasOne(d => d.Login).WithMany(p => p.Tokens)
                 .HasForeignKey(d => d.LoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+                //.OnDelete(DeleteBehavior.ClientSetNull)
+                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_Tokens_Logins");
         });
 

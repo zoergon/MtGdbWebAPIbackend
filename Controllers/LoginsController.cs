@@ -89,19 +89,19 @@ namespace MtGdbWebAPIbackend.Controllers
 
         // Käyttäjän poistaminen
         [HttpDelete]
-        [Route("{key}")]
-        public ActionResult DeleteUser(int key)
+        [Route("{id}")]
+        public ActionResult DeleteUser(int id)
         {
-            Login user = db.Logins.Find(key);
+            Login user = db.Logins.Find(id);
             if (user != null)
             {
                 db.Logins.Remove(user);
                 db.SaveChanges();
-                return Ok("Username " + key + " is deleted.");
+                return Ok("Username " + id + " is deleted.");
             }
             else
             {
-                return NotFound("Username " + key + " not found.");
+                return NotFound("Username " + id + " not found.");
             }
         }
     }

@@ -6,14 +6,23 @@ using Microsoft.IdentityModel.Tokens;
 using MtGdbWebAPIbackend.Services;
 using MtGdbWebAPIbackend.Services.Interfaces;
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.Identity.Web;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 
-// Nämä lisätty
+// Nï¿½mï¿½ lisï¿½tty
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("MyCorsPolicy",
@@ -23,14 +32,13 @@ builder.Services.AddCors(options =>
 });
 
 // ---------------- Connection string luetaan appsettings.json tiedostosta -------------
-// jos olisi useampi yhteys > "paikallinen" > "muuksi"
 
 builder.Services.AddDbContext<MtGdbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("paikallinen")
+    builder.Configuration.GetConnectionString("azure")
     ));
 
-// Non-nullable kentät, jotka aiheuttavat ongelmia POST/PUT-metodeissa, joilla ei pitäisi olla käytännön merkitystä varsinaiseen POST/PUT:iin
-// -> Voidaan kiertää tällä.
+// Non-nullable kentï¿½t, jotka aiheuttavat ongelmia POST/PUT-metodeissa, joilla ei pitï¿½isi olla kï¿½ytï¿½nnï¿½n merkitystï¿½ varsinaiseen POST/PUT:iin
+// -> Voidaan kiertï¿½ï¿½ tï¿½llï¿½.
 builder.Services.AddControllers(
     options => options.SuppressImplicitRequiredAttributeForNonNullableReferenceTypes = true);
 
@@ -38,11 +46,37 @@ builder.Services.AddControllers(
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// ---------------- tuodaan appSettings.jsoniin tekmämme AppSettings määritys ----------
+//builder.Services.AddSwaggerGen(c =>
+//{
+//    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+//    {
+//        Title = "MyAPI",
+//        Version = "v1"
+//    });
+//});
+
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+//else
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI(options =>
+//    {
+//        options.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI");
+//        options.RoutePrefix = string.Empty;
+//    });
+//}
+
+// ---------------- tuodaan appSettings.jsoniin tekmï¿½mme AppSettings mï¿½ï¿½ritys ----------
 
 var appSettingsSection = builder.Configuration.GetSection("AppSettings");
 builder.Services.Configure<AppSettings>(appSettingsSection);
@@ -71,9 +105,17 @@ builder.Services.AddAuthentication(au =>
 
 builder.Services.AddScoped<IAuthenticateService, AuthenticateService>();
 
-// ---------------- Jwt-määritys päättyy ----------
+// ---------------- Jwt-mï¿½ï¿½ritys pï¿½ï¿½ttyy ----------
 
 var app = builder.Build();
+
+//app.UseSwagger();
+//app.UseSwaggerUI(c =>
+//{
+//    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+//    c.RoutePrefix = string.Empty;
+//});
+//app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -86,11 +128,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//app.UseAuthentication();
+
 app.UseAuthorization();
 
-//tämä lisätty
+//tï¿½mï¿½ lisï¿½tty
 app.UseCors("MyCorsPolicy");
 
- app.MapControllers();
+app.MapControllers();
 
 app.Run();

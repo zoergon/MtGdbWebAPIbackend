@@ -25,11 +25,11 @@ namespace MtGdbWebAPIbackend.Controllers
         // Hakee kaikki OwnedCards-taulukon kortit
         [HttpGet]
         [Route("")]
-        public List<OwnedCard> GetAllCards()
+        public async Task<List<OwnedCard>> GetAllCards()
         {
-            List<OwnedCard> cards = db.OwnedCards
+            List<OwnedCard> cards = await db.OwnedCards
                 .Include(ac => ac.IdNavigation)
-                .ToList();
+                .ToListAsync();
 
             return cards;
         }
@@ -37,15 +37,21 @@ namespace MtGdbWebAPIbackend.Controllers
         // Hakee kortit usernamen perusteella
         [HttpGet]
         [Route("loginid/{loginid}")]
-        public List<OwnedCard> GetCardsByUsername(int loginid)
+        public async Task<List<OwnedCard>> GetCardsByLoginId(int loginid)
         {
-            var cards = from c in db.OwnedCards
-                        //join l in db.Logins on c.LoginId equals l.LoginId
-                        //where l.FormatName == format
-                        where c.LoginId == loginid
-                        select c;
+            //var cards = from c in db.OwnedCards
+            //                //join l in db.Logins on c.LoginId equals l.LoginId
+            //                //where l.FormatName == format
+            //            where c.LoginId == loginid
+            //            select c;
 
-            return cards.ToList();
+            //return cards.ToList();
+            List<OwnedCard> cards = await db.OwnedCards
+                .Where(o => o.LoginId == loginid)
+                .Include(ac => ac.IdNavigation)
+                .ToListAsync();
+
+            return cards;
         }
 
         //[HttpGet]
@@ -84,8 +90,8 @@ namespace MtGdbWebAPIbackend.Controllers
         [Route("id/{id}")]
         public async Task<ActionResult<IEnumerable<OwnedCard>>> GetOneCardById(string id)
         {
-            var cards = await db.OwnedCards.
-                               Where(o => o.Id == id)
+            var cards = await db.OwnedCards
+                               .Where(o => o.Id == id)
                                .Include(ac => ac.IdNavigation)
                                .ToListAsync();
 

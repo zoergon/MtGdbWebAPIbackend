@@ -1,15 +1,20 @@
 {
   "dependencies": {
+    "mssql2": {
+      "secretStore": null,
+      "type": "mssql.onprem",
+      "connectionId": "ConnectionStrings:paikallinen",
+      "dynamicId": null
+    },
     "apis1": {
       "apiEndpoint": "https://mtgdbwebapi.azure-api.net/",
       "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/MtGdbWebAPI/apis/MtGdbWebAPI",
       "type": "apis.azure"
     },
     "mssql1": {
-      "secretStore": "AzureAppSettings",
-      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/mtgdbserver/databases/MtGdb",
-      "type": "mssql.azure",
-      "connectionId": "azure"
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:ConnectionStrings:paikallinen"
     }
   }
 }

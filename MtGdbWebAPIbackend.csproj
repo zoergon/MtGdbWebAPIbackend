@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>MtGdbWebAPIbackend</RootNamespace>
+    <UserSecretsId>b84c13ee-9dce-4462-8a90-d328f99321b3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

@@ -25,9 +25,9 @@ namespace MtGdbWebAPIbackend.Controllers
         // Hakee kaikki AllCards-taulukon kortit
         [HttpGet]
         [Route("")]
-        public List<AllCard> GetAllCards()
+        public async Task<List<AllCard>> GetAllCards()
         {
-            List<AllCard> cards = db.AllCards.ToList();
+            List<AllCard> cards = await db.AllCards.ToListAsync();
 
             return cards;
 
@@ -44,8 +44,8 @@ namespace MtGdbWebAPIbackend.Controllers
         //}
         public async Task<ActionResult<IEnumerable<AllCard>>> GetOneCardById(string id)
         {
-            var cards = await db.AllCards.
-                               Where(ac => ac.Id == id)
+            var cards = await db.AllCards
+                               .Where(ac => ac.Id == id)
                                .ToListAsync();
 
             //var cards = await db.MainDecks.Where(x => x.DeckId == deckId)

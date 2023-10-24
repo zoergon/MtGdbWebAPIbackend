@@ -34,7 +34,7 @@ builder.Services.AddCors(options =>
 // ---------------- Connection string luetaan appsettings.json tiedostosta -------------
 
 builder.Services.AddDbContext<MtGdbContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("azure")
+    builder.Configuration.GetConnectionString("ConnectionStrings:paikallinen")
     ));
 
 // Non-nullable kent�t, jotka aiheuttavat ongelmia POST/PUT-metodeissa, joilla ei pit�isi olla k�yt�nn�n merkityst� varsinaiseen POST/PUT:iin
